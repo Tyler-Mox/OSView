@@ -1,0 +1,85 @@
+<%# File created 11/27/2022 by Samuel Dominguez %>
+<%# File edited 11/28/2022 by Samuel Dominguez: added if statement with devise method to check if there is a logged in user %>
+<%# File edited 12/03/2022 by Tyler Mox: Added header partial %>
+<%# File edited 12/04/2022 by Samuel Dominguez: added reviews display %>
+<%# File edited 12/05/2022 by Samuel Dominguez: added divs to assist styling, added ternary operators to print more grammatically appropriate text %>
+<%# File edited 12/06/2022 by Samuel Dominguez: added if statement to display message if user has no next benefit, otherwise print points needed to next benefit %>
+
+<%= render "partials/header" %>
+<body>
+    <div>
+        <% if user_signed_in? %>
+            <%# Created 11/27/2022 by Samuel Dominguez %>
+            <%# Edited 12/05/2022 by Samuel Dominguez: added more data from user %>
+            <div class="profile-card">
+                <h2>Hello, <%=@username %>!</h2>
+                <p> Name: <%=@first_name %> <%=@last_name %></p>
+                <p> Email: <%=@email %></p>
+                <p> Phone: <%=@phone %></p>
+            </div>
+
+            <%# Created 12/04/2022 by Samuel Dominguez%>
+            <div class="profile-stats">
+                <%# Created 11/27/2022 by Samuel Dominguez%>
+                <%# Edited 12/05/2022 by Samuel Dominguez: added conditional to output point or points to reflect current point balance %>
+                <%# Edited 12/05/2022 by Samuel Dominguez: added check if user has no next benefit and display appropriate message %>
+                <div class="benefits-card">
+                    <h2 class="section-title">Benefits</h2>
+                    <h3>You have <%= @points %> <%= @points == 1 ? "point" : "points" %>!</h3>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Points</th>
+                            <th>Reward</th>
+                        </tr>
+                    <% @benefits.each do |benefit| %>
+                        <% if @points >= benefit.required_points %>
+                            <tr class="earned">
+                        <% else %>
+                            <tr>
+                        <% end %>
+                                <td><%= benefit.tier_name %></td>
+                                <td><%= benefit.required_points%></td>
+                                <td><%= benefit.reward%></td>
+                            </tr>
+                    <% end %>
+                    </table>
+                    <% if @next_benefit != nil %>
+                        <p>You are <%= @next_benefit.required_points - @points %> points away from reaching <%= @next_benefit.tier_name %> status! </p>
+                    <% else %>
+                        <p>You have reached Diamond status!</p>
+                    <% end %>
+                </div>
+
+                <%# Created 11/27/2022 by Samuel Dominguez %>
+                <%# Edited 12/05/2022 by Samuel Dominguez: added conditional to output review or reviews to reflect number of reviews %>
+                <div class="reviews-card">
+                    <h2 class="section-title">Reviews</h2>
+                    <% if @reviews.length == 0 %>
+                        <p>No reviews yet.</p>
+                    <% else %>
+                        <h3> You have written <%=@reviews.length %> <%= @reviews.length == 1 ? "review" : "reviews" %>!</h3>
+                        <table>
+                            <tr>
+                                <th>Location</th>
+                                <th>Busy Value</th>
+                                <th>Rating</th>
+                                <th>Comment</th>
+                            </tr>
+                        <% @reviews.each do |review| %>
+                                <tr>
+                                    <td><%= review.location.name %></td>
+                                    <td><%= review.busy_value %></td>
+                                    <td><%= review.rating %></td>
+                                    <td><%= review.comment %></td>
+                                </tr>
+                        <% end %>
+                        </table>
+                    <% end %>
+                </div>
+            </div>
+        <% else %>
+            <p>You are not signed in<p>
+        <% end %>
+    </div>
+</body>

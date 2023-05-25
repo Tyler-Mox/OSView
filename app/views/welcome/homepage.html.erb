@@ -1,0 +1,128 @@
+<!-- File created 11/24/2022 by Ankit Patel -->
+<!-- File edited 11/25/2022 by Ankit Patel: Added database information to homepage -->
+<!-- File edited 12/2/2022 by Ankit Patel: Changed more options to redirect webpage (popular locations, nearest to you, shortest wait time) -->
+<!-- File edited 12/03/2022 by Ankit Patel: Added review section to show top reviews -->
+<!-- File edited 12/04/2022 by Ankit Patel: Added about and your summary -->
+<!-- File edited 12/05/2022 by Ankit Patel: Added summary section -->
+<!-- File edited 12/06/2022 by Ankit Patel: Added and changed tags for styling purposes -->
+
+<body>
+    <div class="header">
+        <nav>
+            <div><%= image_tag("osview_logo.png", class: "logo") %></div>
+            <ul class="nav-links">
+                <li><%= link_to "Popular Locations", "locations/?order=Rating", class: "a" %></li>
+                <li><%= link_to "Shortest Wait Time", "locations/?order=Wait+time", class: "a" %></li>
+            </ul>
+            <div class="registration">
+                <% if current_user %>
+                    <div><%= link_to 'View Profile', "profile/view_profile", class: "register-btn"%></div>
+                    <div><%= link_to 'Log Out', destroy_user_session_path, class: "register-btn", method: :delete %></div>
+                <% else %>
+                    <span><%= link_to 'Register Now', new_user_registration_path, class: "register-btn" %></span>
+                    <span><%= link_to 'Log In', new_user_session_path, class: "register-btn" %></span>
+                <% end %>
+            </div>
+        </nav>
+        <div class="container">
+            <h1>Because no one likes lines</h1>
+            <div class="search-bar">
+                <%= search_form_for(@query, url: locations_path, method: :get, class:'d-flex') do |f| %>
+                    <%= f.search_field :name_or_address_or_type_of_i_cont_any, placeholder: "Where are you eating...", class: "form-control-lg"%>
+                    <button type="submit" class="search">
+                        <i class="fa-solid fa-magnifying-glass fa-2x accent"></i>
+                    </button>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="sub-title">Trending</h2>
+        <div class="trending">
+            <% @locations.limit(12).each do |location| %>   
+                <div>
+                    <%= link_to location, :class => 'nostyle' do %>
+                        <%= image_tag(location.img_src, class: "trending-food") %>
+                    <% end %>
+                    <span>
+                        <h3><%= location.name %></h3> 
+                        <p class="rating">Rating: <%= location.rating %> <i class="fa-solid fa-star accent"></i><p> 
+                    </span>
+                </div>
+            <% end %>
+        </div>
+        <div class="summary-wrapper">
+        <% if current_user %>
+            <h2 class="sub-title-summary">Your Account Summary</h2>
+            <div class="summary-container">
+                <div class="summary-card">
+                    <p><i class="fa-solid fa-trophy fa-6x"></i><p> 
+                    <h2 class="current-rewards">Current Rewards</h2>
+                    <p><strong><%= @current_benefit.reward %></strong></p>
+                </div>
+                <div class="summary-card">
+                    <div>
+                        <%= image_tag(@member_icon, class: "experience-card-img") %>
+                    </div>
+                    <h3 class=<%= @tier_font_style %>><strong><%= @current_benefit.tier_name %></strong></h3>
+                    <p>You have <span class="summary-points"><strong><%= @points %></strong></span> points</p>
+                </div>
+                <% if @points < 5000 %>
+                    <div class="summary-card">
+                        <p><i class="fa-sharp fa-solid fa-arrow-right fa-6x"></i></p>
+                        <h2>Next Level: <%= @next_benefit.tier_name %></h2>
+                        <p>You have <span class="summary-points"><strong><%= @points_needed %></strong></span> points to go</p>
+                    </div>
+                <% else %>
+                    <div class="summary-card">
+                        <p><i class="fa-solid fa-trophy fa-6x fa-6x"></i></p>
+                        <h2>Well Done</h2>
+                        <p>You have exceeded the max experience level</strong></p>
+                    </div>
+                <% end %>
+            </div>
+        <% else %>
+            <div class="register-ad">
+                <h3>Rewards?</h3>
+                <p>Register now to earn</p>
+                <span><%= link_to 'Register Here', new_user_registration_path, class: "register-btn" %></span>
+            </div>
+        <% end %>
+        </div>
+        <h2 class="sub-title-reviews">Restaurant Reviews</h2>
+        <section class="top-user-reviews">
+            <div class="full-box">
+                <% @reviews.limit(6).each do |review| %>
+                    <div class="comment-box">
+                        <%= link_to review.location, :class => 'nostyle' do %>
+                        <div class="profile">
+                            <div class="profile-image">
+                                <%= image_tag(@top_review_users.shift, class: "logo-review") %>
+                            </div>
+                            <div class="review-name">
+                                <strong>
+                                    <%= review.user.first_name %> 
+                                    <%= review.user.last_name %> at 
+                                    <span class="location-review"><strong><%= review.location.name %></strong></span>
+                                </strong>
+                                <span>@<%= review.user.username %></span>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <p><%= review.comment %></p>
+                            <br />
+                            <div class='text-icon'>
+                                <p><%= review.rating %> <span><i class="fa-solid fa-star accent"></i></span></p>
+                            </div>
+                        </div>
+                        <% end%>
+                    </div>
+                <% end %>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <h2 class="footer-title">About Us</h2>
+        <p>OSView is a website to help OSU students, faculty, and guests make the best decision on where to eat right now. Many times, students leave their class hungry and want to know what their immediate options are. Other times, students of legal drinking age who are out with their friends want to find a bar with the shortest line. However when they walk into the nearest restaurant or cafe, they are greeted by a huge line of other students and are disappointed with the food quality. OSView provides information such as restaurant reviews and current line information to prevent this from happening. With OSView, you can be confident you are making the most efficient and delicious use of your time.</p>
+    </footer>
+</body>

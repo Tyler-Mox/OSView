@@ -1,0 +1,79 @@
+<!-- File created 11/27/2022 by Brendan Gass -->
+<!-- File edited 12/03/2022 by Tyler Mox: Added review partial -->
+<%# File edited 12/04/2022 by Samuel Dominguez: added support for displaying information from a locations reviews %>
+<!-- File edited 12/06/2022 by Brendan Gass: Styled page -->
+
+<%= render "partials/header" %>
+<%# File edited 12/05/2022 by Samuel Dominguez: fixed bug in displaying latest busy value created time %>
+<div class='show'>
+    <div class='show-wrapper'>
+         <div class='row'>
+            <h1><%= @location.name %> </h1>
+            <% if @location.rating == 0 %>
+                <h3>No ratings available</h3>
+            <% else %>
+            <div class="text-icon">
+                <h3><%= @location.rating %></h3>
+                <i class="fa-solid fa-star accent"></i>
+            </div>
+            <% end %>         
+        </div> 
+        <hr>
+        <div class='row-main'>
+            <div class="img-wrapper">
+                <%= image_tag @location.img_src %>
+            </div>
+            <div class='col'>
+                <h2>Location</h2>
+                <% iframe_src = "https://maps.google.com/maps?q=#{@location.address.gsub(" ", "+").tr(',', '')}&t=&z=13&ie=UTF8&iwloc=&output=embed" %> 
+                <iframe src="<%= iframe_src %>"></iframe>
+            </div>
+        </div>
+        <% case @location.busy_value %>
+        <% when 1 %>
+            <% div_class = 'good' %>
+            <% h3_class = 'goodText' %>
+            <% busy_header = 'Not Busy'%>
+            <% busy_text = '0 - 5 mins'%>
+        <% when 2 %>
+            <% div_class = 'good' %>
+            <% h3_class = 'goodText' %>
+            <% busy_header = 'Not Busy'%>
+            <% busy_text = '5 - 15 mins'%>
+        <% when 3 %>
+            <% div_class = 'caution' %>
+            <% h3_class = 'cautionText' %>
+            <% busy_header = 'Busy'%>
+            <% busy_text = '15 - 30 mins' %>
+        <% when 4 %>
+            <% div_class = 'caution' %>
+            <% h3_class = 'cautionText' %>
+            <% busy_header = 'Busy'%>
+            <% busy_text = '30 - 60 mins' %>
+        <% when 5 %>
+            <% div_class = 'bad' %>
+            <% h3_class = 'badText' %>
+            <% busy_header = 'Very Busy'%>
+            <% busy_text = '> 1 hour' %>
+        <% end %>
+        <% if !@location.busy_value.nil? %>
+            <div class='busy-indicator'>
+                <div class=<%= div_class %>></div>
+                <div class='col'>
+                    <h3 class=<%= h3_class %>><%= busy_header %></h3>
+                    <h4><%= busy_text %></h4>
+                </div>
+            </div>
+        <% end %>
+        <% if user_signed_in? %>
+            <div class='round-btn'>
+                <%= link_to "Add Review", new_location_review_path(@location), :class => 'submit-btn' %>
+            </div>
+        <% end %>
+        <div class='reviews'>
+            <%= render @location.reviews %>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,24 @@
+<div class='devise'>
+  <div class='content'>
+    <%= show_svg('auth_splash_full.svg') %> 
+  </div>
+  <div class='auth'>
+    <div>
+      <%= image_tag "osview_logo.png" %>
+      <h1>Resend unlock instructions</h1>
+
+      <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }, data: { turbo: false }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <div class="field">
+          <%= f.label :email, :class => 'text-input' %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => 'text-input' %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Resend unlock instructions" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+// File created 11/27/2022 by Samuel Dominguez
+// File edited 12/05/2022 by Samuel Dominguez: improved styling by renaming mixin and aligning content more properly
+@import "./application.css.scss";
+
+// Created 11/27/2022 by Samuel Dominguez
+// Edited 12/05/2022 by Samuel Dominguez: renamed mixin
+@mixin border-styling () {
+    border: 1px solid black;
+    border-radius: 10px;
+    max-width: max-content;
+    padding: 10px;
+}
+
+// Created 11/27/2022 by Samuel Dominguez
+table, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-radius: 10px;
+
+    .earned {
+        color: green;
+    }
+}
+
+// Created 12/05/2022 by Samuel Dominguez
+table {
+    th, td {
+        padding: 5px 10px 5px;
+        text-align: center;
+        max-width: 300px;
+    }
+
+    td:first-child, td:last-child {
+        text-align: start
+    }
+}
+
+// Created 12/05/2022 by Samuel Dominguez
+.register-btn {
+    width: fit-content;
+}
+
+// Created 11/27/2022 by Samuel Dominguez
+// Edited 12/05/2022 by Samuel Dominguez: added styling to place card in the middle of the screen and renamed mixin
+.profile-card {
+    @include border-styling();
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2%;
+    align-items: center;
+}
+
+// Created 11/27/2022 by Samuel Dominguez
+// Created 12/05/2022 by Samuel Dominguez: renamed mixin
+.benefits-card {
+    @include border-styling();
+}
+
+// Created 11/27/2022 by Samuel Dominguez
+// Created 12/05/2022 by Samuel Dominguez: renamed mixin
+.reviews-card {
+    @include border-styling();
+}
+
+// Created 12/05/2022 by Samuel Dominguez
+.profile-stats {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}

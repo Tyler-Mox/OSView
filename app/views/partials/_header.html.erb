@@ -1,0 +1,16 @@
+<!-- File Created 11/29/2022 by Tyler Mox -->
+<div class="navhead">
+    <div class="left">
+        <div id="logo"> <a href="/"><%= image_tag("osview_logo.png", class: "logo") %></a></div>
+        <a href="/">OSView</a>
+    </div>
+    <div class="right">
+        <% if user_signed_in? %>
+            <div id="signout"><%= button_to 'Sign Out', destroy_user_session_path, method: :delete %></div>
+            <div id="edit"><%= link_to "Edit", edit_user_registration_path %></div>
+        <% else %>
+            <div id="login"> <%= link_to 'Log in', new_user_session_path %> </div>
+            <div id="signup"><%= link_to 'Sign up', new_user_registration_path %></div>
+        <% end %>
+    </div>
+</div>

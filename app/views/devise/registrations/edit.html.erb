@@ -1,0 +1,69 @@
+<div class='devise'>
+	<div class='content'>
+		<%= show_svg('auth_splash_full.svg') %> 
+	</div>
+	<div class='auth'>
+		<div>
+			<%= image_tag "osview_logo.png" %>
+			<h1>Edit Profile</h1>
+			<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, data: { turbo: false }) do |f| %>
+				<%= render "devise/shared/error_messages", resource: resource %>
+
+				<div class="field">
+					<%= f.label :email, :class => 'text-label' %>
+					<%= f.email_field :email, autofocus: true, autocomplete: "email", :class => 'text-input' %>
+				</div>
+
+				<div class="field">
+    				<%= f.label :first_name, :class => 'text-label' %>
+    				<%= f.text_field :first_name, autofocus: true, autocomplete: "first name", :class=> 'text-input' %>
+  				</div>
+
+  				<div class="field">
+    				<%= f.label :last_name, :class => 'text-label' %>
+    				<%= f.text_field :last_name, autofocus: true, autocomplete: "last name", :class=> 'text-input' %>
+  				</div>
+
+  				<div class="field">
+   					 <%= f.label :username, :class => 'text-label' %>
+    				<%= f.text_field :username, autofocus: true, autocomplete: "username", :class=> 'text-input' %>
+  				</div>
+
+  				<% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    				<div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  				<% end %>
+
+  				<div class="field">
+					<div class='row'>
+						<%= f.label :password, :class => 'text-label' %> <i>(leave blank if you don't want to change it)</i>
+					</div>
+					<%= f.password_field :password, autocomplete: "new-password", :class => 'text-input' %>
+				</div>
+
+				<div class="field">
+					<%= f.label :password_confirmation, :class => 'text-label' %>
+					<%= f.password_field :password_confirmation, autocomplete: "new-password", :class => 'text-input' %>
+				</div>
+
+				<div class="field">
+					<div class='row'>
+						<%= f.label :current_password, :class => 'text-label' %> <i>(we need your current password to confirm your changes)</i>
+					</div>
+					<%= f.password_field :current_password, autocomplete: "current-password", :class => 'text-input' %>
+				</div>
+
+				<div class="actions">
+					<%= f.submit "Update" %>
+				</div>
+			<% end %>
+
+			<div class='divider'>
+				<div></div>
+				<p>or</p>
+				<div></div>
+			</div>
+
+			<%= link_to "Cancel", :back, class: 'accent-btn' %>
+		</div>
+	</div>
+</div>

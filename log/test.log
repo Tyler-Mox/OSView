@@ -1,0 +1,293 @@
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "benefits"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "benefits" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tier_name" varchar, "required_points" integer, "reward" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "locations"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "locations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "address" varchar, "rating" decimal, "busy_value" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "img_src" varchar, "latitude" float, "longitude" float, "type_of" varchar, "on_campus" boolean, "phone" varchar)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "reviews"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "rating" integer, "comment" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, "location_id" integer NOT NULL, "busy_value" integer)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "index_reviews_on_location_id" ON "reviews" ("location_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_reviews_on_user_id" ON "reviews" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime(6), "remember_created_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "first_name" varchar, "last_name" varchar, "phone" varchar, "username" varchar, "points" integer DEFAULT 0)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "areviews" ("id" integer NOT NULL PRIMARY KEY, "rating" integer DEFAULT NULL, "comment" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, "location_id" integer NOT NULL, "busy_value" integer DEFAULT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_areviews_on_user_id" ON "areviews" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_areviews_on_location_id" ON "areviews" ("location_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "areviews" ("id","rating","comment","created_at","updated_at","user_id","location_id","busy_value")
+                     SELECT "id","rating","comment","created_at","updated_at","user_id","location_id","busy_value" FROM "reviews"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "reviews"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" integer NOT NULL PRIMARY KEY, "rating" integer DEFAULT NULL, "comment" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, "location_id" integer NOT NULL, "busy_value" integer DEFAULT NULL, CONSTRAINT "fk_rails_b82013c5ae"
+FOREIGN KEY ("location_id")
+  REFERENCES "locations" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_reviews_on_location_id" ON "reviews" ("location_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_reviews_on_user_id" ON "reviews" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "reviews" ("id","rating","comment","created_at","updated_at","user_id","location_id","busy_value")
+                     SELECT "id","rating","comment","created_at","updated_at","user_id","location_id","busy_value" FROM "areviews"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "areviews"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "areviews" ("id" integer NOT NULL PRIMARY KEY, "rating" integer DEFAULT NULL, "comment" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, "location_id" integer NOT NULL, "busy_value" integer DEFAULT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_areviews_on_user_id" ON "areviews" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_areviews_on_location_id" ON "areviews" ("location_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "areviews" ("id","rating","comment","created_at","updated_at","user_id","location_id","busy_value")
+                     SELECT "id","rating","comment","created_at","updated_at","user_id","location_id","busy_value" FROM "reviews"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "reviews"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" integer NOT NULL PRIMARY KEY, "rating" integer DEFAULT NULL, "comment" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, "location_id" integer NOT NULL, "busy_value" integer DEFAULT NULL, CONSTRAINT "fk_rails_b82013c5ae"
+FOREIGN KEY ("location_id")
+  REFERENCES "locations" ("id")
+, CONSTRAINT "fk_rails_74a66bd6c5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_reviews_on_location_id" ON "reviews" ("location_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_reviews_on_user_id" ON "reviews" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "reviews" ("id","rating","comment","created_at","updated_at","user_id","location_id","busy_value")
+                     SELECT "id","rating","comment","created_at","updated_at","user_id","location_id","busy_value" FROM "areviews"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "areviews"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20221207201925)[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20221123161336),
+(20221123165453),
+(20221126084844),
+(20221127172432),
+(20221127222443),
+(20221127222909),
+(20221128211421),
+(20221128211445),
+(20221128211516),
+(20221128211540),
+(20221128211558),
+(20221129141235),
+(20221130020728),
+(20221130175340),
+(20221130175405),
+(20221130175428),
+(20221130175504),
+(20221130185811),
+(20221130185951),
+(20221130190021),
+(20221201152701),
+(20221201153120),
+(20221201184128),
+(20221202174948);
+
+[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2022-12-08 01:08:14.205832"], ["updated_at", "2022-12-08 01:08:14.205832"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "57cd7204c589859ca11334da5301e23a51025df0"], ["created_at", "2022-12-08 01:08:14.208122"], ["updated_at", "2022-12-08 01:08:14.208122"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixtures Load (0.4ms)[0m  [1m[31mDELETE FROM "benefits";
+DELETE FROM "locations";
+DELETE FROM "reviews";
+DELETE FROM "users";
+INSERT INTO "benefits" ("id", "tier_name", "required_points", "reward", "created_at", "updated_at") VALUES (980190962, 'MyString', 1, 'MyString', '2022-12-08 01:08:14.260878', '2022-12-08 01:08:14.260878');
+INSERT INTO "benefits" ("id", "tier_name", "required_points", "reward", "created_at", "updated_at") VALUES (298486374, 'MyString', 1, 'MyString', '2022-12-08 01:08:14.260878', '2022-12-08 01:08:14.260878');
+INSERT INTO "locations" ("id", "name", "address", "rating", "busy_value", "created_at", "updated_at", "img_src") VALUES (1, 'MyString', 'MyString', 9.99, 1, '2022-12-08 01:08:14.261811', '2022-12-08 01:08:14.261811', 'https://dining.osu.edu/posts/images/sp20-dining-location-logos-14-big.jpg');
+INSERT INTO "locations" ("id", "name", "address", "rating", "busy_value", "created_at", "updated_at", "img_src") VALUES (2, 'MyString', 'MyString', 9.99, 1, '2022-12-08 01:08:14.261811', '2022-12-08 01:08:14.261811', 'https://dining.osu.edu/posts/images/sp20-dining-location-logos-16-big.jpg');
+INSERT INTO "reviews" ("id", "rating", "comment", "created_at", "updated_at", "user_id", "location_id", "busy_value") VALUES (980190962, 1, 'MyString', '2022-12-08 01:08:14.262307', '2022-12-08 01:08:14.262307', 1, 1, 1);
+INSERT INTO "reviews" ("id", "rating", "comment", "created_at", "updated_at", "user_id", "location_id", "busy_value") VALUES (298486374, 2, 'MyString', '2022-12-08 01:08:14.262307', '2022-12-08 01:08:14.262307', 2, 2, 2);
+INSERT INTO "users" ("id", "email", "created_at", "updated_at", "first_name", "last_name", "phone", "username", "points") VALUES (1, 'test1@gmail.com', '2022-12-08 01:08:14.262657', '2022-12-08 01:08:14.262657', 'Sam', 'Dominguez', '(111)-111-1111', 'SD', 1);
+INSERT INTO "users" ("id", "email", "created_at", "updated_at", "first_name", "last_name", "phone", "username", "points") VALUES (2, 'test2@gmail.com', '2022-12-08 01:08:14.262657', '2022-12-08 01:08:14.262657', 'Joe', 'Swanson', '(222)-222-2222', 'JS', 1)[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_key_check[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------------
+ProfileControllerTest: test_should_get_view_profile
+---------------------------------------------------
+Started GET "/profile/view_profile" for 127.0.0.1 at 2022-12-07 20:08:14 -0500
+Processing by ProfileController#view_profile as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering profile/view_profile.html.erb within layouts/application
+  Rendered partials/_header.html.erb (Duration: 5393.7ms | Allocations: 315259)
+  Rendered profile/view_profile.html.erb within layouts/application (Duration: 5394.7ms | Allocations: 316582)
+  Rendered layout layouts/application.html.erb (Duration: 5401.2ms | Allocations: 337785)
+Completed 200 OK in 5409ms (Views: 5402.8ms | ActiveRecord: 0.0ms | Allocations: 341642)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------
+ReviewTest: test_invalid_user_id
+--------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 100000], ["LIMIT", 1]]
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------
+ReviewTest: test_Both_ids_and_only_busy_value
+---------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReview Create (0.2ms)[0m  [1m[32mINSERT INTO "reviews" ("rating", "comment", "created_at", "updated_at", "user_id", "location_id", "busy_value") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["rating", nil], ["comment", nil], ["created_at", "2022-12-08 01:08:19.822804"], ["updated_at", "2022-12-08 01:08:19.822804"], ["user_id", 1], ["location_id", 1], ["busy_value", 2]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------
+ReviewTest: test_no_params
+--------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------
+ReviewTest: test_All_params
+---------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReview Create (0.1ms)[0m  [1m[32mINSERT INTO "reviews" ("rating", "comment", "created_at", "updated_at", "user_id", "location_id", "busy_value") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["rating", 1], ["comment", "2"], ["created_at", "2022-12-08 01:08:19.824978"], ["updated_at", "2022-12-08 01:08:19.824978"], ["user_id", 1], ["location_id", 1], ["busy_value", 2]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------
+ReviewTest: test_only_user_id_and_location_id
+---------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReview Create (0.1ms)[0m  [1m[32mINSERT INTO "reviews" ("rating", "comment", "created_at", "updated_at", "user_id", "location_id", "busy_value") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["rating", nil], ["comment", nil], ["created_at", "2022-12-08 01:08:19.826098"], ["updated_at", "2022-12-08 01:08:19.826098"], ["user_id", 1], ["location_id", 1], ["busy_value", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------
+ReviewTest: test_Both_ids_and_only_rating
+-----------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReview Create (0.1ms)[0m  [1m[32mINSERT INTO "reviews" ("rating", "comment", "created_at", "updated_at", "user_id", "location_id", "busy_value") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["rating", 1], ["comment", nil], ["created_at", "2022-12-08 01:08:19.827362"], ["updated_at", "2022-12-08 01:08:19.827362"], ["user_id", 1], ["location_id", 1], ["busy_value", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------
+ReviewTest: test_invalid_location_id
+------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 100000], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------------
+ReviewTest: test_Both_ids_and_only_comment
+------------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mReview Create (0.1ms)[0m  [1m[32mINSERT INTO "reviews" ("rating", "comment", "created_at", "updated_at", "user_id", "location_id", "busy_value") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["rating", nil], ["comment", "good food"], ["created_at", "2022-12-08 01:08:19.829485"], ["updated_at", "2022-12-08 01:08:19.829485"], ["user_id", 1], ["location_id", 1], ["busy_value", nil]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+--------------------------------
+ReviewTest: test_nil_location_id
+--------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------
+ReviewTest: test_nil_user_id
+----------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+-----------------------------------------------
+WelcomeControllerTest: test_should_get_homepage
+-----------------------------------------------
+Started GET "/welcome/homepage" for 127.0.0.1 at 2022-12-07 20:08:19 -0500
+Processing by WelcomeController#homepage as HTML
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" ORDER BY reviews.rating DESC[0m
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering welcome/homepage.html.erb within layouts/application
+  [1m[36mLocation Load (0.2ms)[0m  [1m[34mSELECT "locations".* FROM "locations" ORDER BY locations.rating DESC LIMIT ?[0m  [["LIMIT", 12]]
+  [1m[36mReview Load (0.0ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" ORDER BY reviews.rating DESC LIMIT ?[0m  [["LIMIT", 6]]
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mLocation Load (0.0ms)[0m  [1m[34mSELECT "locations".* FROM "locations" WHERE "locations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered welcome/homepage.html.erb within layouts/application (Duration: 4.9ms | Allocations: 5411)
+  Rendered layout layouts/application.html.erb (Duration: 6.2ms | Allocations: 10025)
+Completed 200 OK in 10ms (Views: 6.8ms | ActiveRecord: 0.6ms | Allocations: 12347)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------
+BenefitTest: test_no_reward
+---------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mBenefit Create (0.2ms)[0m  [1m[32mINSERT INTO "benefits" ("tier_name", "required_points", "reward", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["tier_name", "Silver"], ["required_points", 250], ["reward", nil], ["created_at", "2022-12-08 01:08:19.851857"], ["updated_at", "2022-12-08 01:08:19.851857"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+----------------------------
+BenefitTest: test_all_params
+----------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mBenefit Create (0.1ms)[0m  [1m[32mINSERT INTO "benefits" ("tier_name", "required_points", "reward", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["tier_name", "Silver"], ["required_points", 250], ["reward", "$5 Visa Gift Card"], ["created_at", "2022-12-08 01:08:19.853573"], ["updated_at", "2022-12-08 01:08:19.853573"]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------
+BenefitTest: test_no_params
+---------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------
+BenefitTest: test_no_tier_name
+------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+------------------------------------
+BenefitTest: test_no_required_points
+------------------------------------
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+---------------------------------------------
+LocationControllerTest: test_should_get_index
+---------------------------------------------
+Started GET "/locations" for 127.0.0.1 at 2022-12-07 20:08:19 -0500
+Processing by LocationsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering locations/index.html.erb within layouts/application
+  Rendered partials/_header.html.erb (Duration: 0.5ms | Allocations: 757)
+  Rendered locations/_search_form.html.erb (Duration: 1.6ms | Allocations: 505)
+  [1m[36mLocation Load (0.1ms)[0m  [1m[34mSELECT DISTINCT "locations".* FROM "locations" ORDER BY "locations"."rating" DESC[0m
+  Rendered collection of locations/_location.html.erb [2 times] (Duration: 0.6ms | Allocations: 693)
+  Rendered locations/index.html.erb within layouts/application (Duration: 5.7ms | Allocations: 5801)
+  Rendered layout layouts/application.html.erb (Duration: 7.1ms | Allocations: 10457)
+Completed 200 OK in 10ms (Views: 8.8ms | ActiveRecord: 0.1ms | Allocations: 11540)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m

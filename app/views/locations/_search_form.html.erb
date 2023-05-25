@@ -1,0 +1,10 @@
+<!-- File created 12/03/2022 by Ankit Patel -->
+<!-- File editted 12/04/2022 by Ankit Patel: Changed f.submit to a button -->
+
+<link rel="stylesheet" href="./locations.css">
+<%= search_form_for(@query, url: locations_path, method: :get, class:'d-flex') do |f| %>
+    <%= f.search_field :name_or_address_i_cont_any, placeholder: "Location...", class: "form-control-lg" %>
+    <button type="submit" class="search">
+        <i class="fa-solid fa-magnifying-glass fa-xl accent"></i>
+    </button>
+<% end %>

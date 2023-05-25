@@ -1,0 +1,50 @@
+<!-- File created 11/28/2022 by Brendan Gass -->
+
+<div class='wrapper'>
+<h3><%= @lat %></h3>
+    <div class='filters'>
+        <div class='row'>
+            <%= link_to @back_url, :class => 'nostyle' do %>
+                <i class="fa-solid fa-xmark fa-lg accent"></i>
+            <% end %>
+            <span>
+                <h1>Filters</h1>
+            </span>
+        </div>
+        <hr>
+        <%= form_with(url: '/locations/filters', method: :get, local: true) do |form| %>
+            <div class='form'>
+                <div class='col'>
+                    <%= form.label :zone, 'Zone', :class => "heading" %>
+                    <div>
+                        <%= form.radio_button :zone, 'On campus', :checked => (@zone == 'On campus') %>
+                        <%= form.label :zone_on_camppus, "On campus" %>
+                        <%= form.radio_button :zone, "Off campus", :checked => (@zone == 'Off campus') %>
+                        <%= form.label :zone_off_campus, "Off campus" %>
+                    </div>
+                </div>
+                <hr>
+                <div class='col'>
+                    <%= form.label :type, 'Type', :class => "heading" %><br>
+                    <div>
+                        <%= form.check_box :types, {multiple: true, checked: (@types.include? 'Restaurants')}, 'Restaurants', nil %>
+                        <%= form.label :type_restaurant, "Restaurants" %>
+                        <%= form.check_box :types, {multiple: true, checked: (@types.include? 'Bars')}, 'Bars', nil %>
+                        <%= form.label :type_bar, "Bars" %>
+                        <%= form.check_box :types, {multiple: true, checked: (@types.include? 'Fast food')}, 'Fast food', nil %>
+                        <%= form.label :type_fast_food, "Fast food" %>
+                        <%= form.check_box :types, {multiple: true, checked: (@types.include? 'Coffee')}, 'Coffee', nil %>
+                        <%= form.label :type_coffee, "Coffee" %>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class='row'>
+                <%= form.submit 'Clear all', :class => 'clear-btn' %>
+                <div class='round-btn'>
+                    <%= form.submit 'Save filters', :class => 'submit-btn' %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>

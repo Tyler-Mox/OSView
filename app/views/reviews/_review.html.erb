@@ -1,0 +1,26 @@
+<!-- File Created 12/3/2022 by Tyler Mox -->
+<!-- File edited 12/6/2023 by Brendan Gass: Changed styling -->
+<div class="comment-box">
+    <div class="profile">
+        <div class="profile-image">
+            <%= image_tag("osview_logo.png", class: "logo-review") %>
+        </div>
+        <div class="review-name">
+            <strong>
+                <%= review.user.first_name %> 
+                <%= review.user.last_name %> at 
+                <span class="location-review"><strong><%= review.location.name %></strong></span>
+            </strong>
+            <span>@<%= review.user.username %></span>
+        </div>
+    </div>
+    <div class="comment">
+        <p><%= review.comment %></p>
+    </div>
+    <% if !review.rating.nil? %>
+        <div class='text-icon'>
+            <h3><%= review.rating %></h3>
+            <i class="fa-solid fa-star accent"></i>
+        </div>
+    <% end %>
+</div>

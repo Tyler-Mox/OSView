@@ -1,0 +1,37 @@
+<!-- File created 11/23/2022 by Brendan Gass -->
+
+<%= link_to location, :class => 'nostyle' do %>
+    <div class="result-item">
+        <div class="img-wrapper">
+            <%= image_tag location.img_src %>
+        </div>
+        <div class="row">
+            <h2><%= location.name %></h2>
+            <% if location.rating > 0 %>
+                <h3>
+                    <div class="row">
+                        <%= location.rating %>
+                        <i class="fa-solid fa-star accent"></i>
+                    </div>
+                </h3>
+            <% end %>
+        </div>
+        <div class="row">
+            <% case location.busy_value %>
+            <% when 1 %>
+                <% wait_time = '0 - 5 mins' %>
+            <% when 2 %>
+                <% wait_time = '5 - 15 mins' %>
+            <% when 3 %>
+                <% wait_time = '15 - 30 mins' %>
+            <% when 4 %>
+                <% wait_time = '30 - 60 mins' %>
+            <% when 5 %>
+                <% wait_time = '> 1 hour' %>
+            <% else %>
+                <% wait_time = 'Wait time unavailable' %>
+            <% end %>
+            <h3><%= wait_time %></h3>
+        </div>
+    </div>
+<% end %>

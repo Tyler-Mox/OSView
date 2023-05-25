@@ -1,0 +1,18 @@
+# File edited 12/01/2022 by Samuel Dominguez: added id fields to satisfy foreign key constraints in reviews.yml
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  name: MyString
+  address: MyString
+  rating: 9.99
+  busy_value: 1
+  img_src: https://dining.osu.edu/posts/images/sp20-dining-location-logos-14-big.jpg
+
+two:
+  id: 2
+  name: MyString
+  address: MyString
+  rating: 9.99
+  busy_value: 1
+  img_src: https://dining.osu.edu/posts/images/sp20-dining-location-logos-16-big.jpg

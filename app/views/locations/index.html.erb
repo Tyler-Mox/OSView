@@ -1,0 +1,45 @@
+<!-- File created 11/23/2022 by Brendan Gass -->
+<!-- File edited 11/29/2022 by Brendan Gass: Adjusted UI -->
+<!-- File edited 11/29/2022 by Brendan Gass: Changed rendering of locations into partial -->
+<!-- File edited 12/03/2022 by Ankit Patel: Added partial for search bar -->
+<!-- File edited 12/3/2022 by Tyler Mox: Added header partial-->
+<%= render "partials/header" %>
+<% content_for :javascript_includes do %>
+  <%= javascript_include_tag "locations.js" %>
+<% end %>
+
+<div class="page-wrapper">
+    <div class="search-bar">
+        <%= render 'locations/search_form' %>
+    </div>
+    <h1><%=@url%></h1>
+    <div class="filter-row">
+        <div class='row'>
+            <%= link_to '/locations/filters', :class => 'nostyle' do %>
+                <div class="icon-text-btn">
+                    <i class="fa-solid fa-sliders accent"></i>
+                    <p>Filters</p>
+                </div>
+            <% end %>
+            <% if @zone %>
+                <div class='filter-item'>
+                    <p><%= @zone %></p>
+                </div>
+            <% end %>
+            <% @types.each do |type| %>
+                <div class='filter-item'>
+                    <p><%= type %></p>
+                </div>
+            <% end %>
+        </div>
+        <div class="icon-text-btn">
+            <%= form_with(url: locations_path, method: :get, local: true) do |form| %>
+                <%= form.select :order, ['Rating', 'Wait time'],  {selected: @sort_type}, {:class => 'select', :onChange=>"javascript: this.form.submit();"} %>
+            <% end %>
+            <i class="fa-solid fa-chevron-down accent"></i>
+        </div>
+    </div>
+    <div class="results">
+        <%= render @locations || 'No locations match this search' %>
+    </div>
+</div>

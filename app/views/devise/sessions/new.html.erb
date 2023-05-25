@@ -1,0 +1,45 @@
+<!-- File edited 11/30/2022 by Brendan Gass: Added classes for styling -->
+<!-- File edited 12/01/2022 by Brendan Gass: Added left content -->
+
+<div class='devise'>
+  <div class='content'>
+    <%= show_svg('auth_splash_full.svg') %> 
+  </div>
+  <div class='auth'>
+    <div>
+      <%= image_tag "osview_logo.png" %>
+      <h1>Welcome back &#128075;</h1>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <div class="field">
+          <%= f.label :email, :class => 'text-label' %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => 'text-input' %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password, :class => 'text-label' %>
+          <%= f.password_field :password, autocomplete: "current-password", :class => 'text-input' %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="field">
+            <%= f.check_box :remember_me, :class => 'checkbox' %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end %>
+
+        <div class="actions">
+          <%= f.submit "Log in" %>
+        </div>
+      <% end %>
+      <div class='divider'>
+        <div></div>
+        <p>or</p>
+        <div></div>
+      </div>
+
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+# File edited 12/01/2022 by Samuel Dominguez: added additional fields to reflect current database schema
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  location_id: 1
+  rating: 1
+  comment: MyString
+  busy_value: 1
+
+two:
+  user_id: 2
+  location_id: 2
+  rating: 2
+  comment: MyString
+  busy_value: 2

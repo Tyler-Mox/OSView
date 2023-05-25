@@ -1,0 +1,117 @@
+/* File created 11/15/2022 by Samuel Dominguez: generated using `rails new` command */
+/* File edited 11/23/2022 by Brendan Gass: Added styles for locations index view
+/* File edited 11/25/2022 by Ankit Patel: Changed body selector tag due to tag styling causing conflicts in other html files */
+/* File edited 11/29/2022 by Brendan Gass: Adjust global styles */
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "font-awesome";
+
+$purple: #c053ff;
+$dark_grey: #7e7e7e;
+$med_grey: #ababab;
+$light_grey: #ebebeb;
+
+@font-face {
+  font-family: Rubik;
+  src: url("Rubik-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: Montserrat;
+  src: url("Montserrat-VariableFont_wght.ttf");
+}
+
+/* Edited by Ankit Patel 11/25/2022: Causing conflicts in other html files due to auto-inclusion which this styling being a generic body tag
+* Changed to body#application for the time being based on what was found from personal research but not sure if it is the solution to the problem.
+* Recommendation would be to create a class selector instead of using the tag.
+*/
+.page-wrapper {
+  padding: 30px;
+}
+
+main {
+  font-family: "Rubik", Arial, Helvetica, sans-serif;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    font-weight: 400;
+    margin: 0;
+  }
+}
+
+.accent {
+  color: $purple;
+}
+
+.notice,
+.alert {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  padding: 10px 15px;
+  border-radius: 20px;
+  background-color: white;
+  color: $purple;
+}
+
+a.nostyle:link,
+a.nostyle:visited {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.icon-text-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: 20px;
+  border: 2px solid $light_grey;
+
+  p {
+    font-size: 18px;
+  }
+
+  select {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    line-height: inherit;
+  }
+
+  option {
+    color: $purple;
+  }
+}
+
+label {
+  font-family: "Rubik", Arial, Helvetica, sans-serif;
+}

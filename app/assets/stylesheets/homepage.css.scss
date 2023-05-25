@@ -1,0 +1,434 @@
+/* File created 11/24/2022 by Ankit Patel */
+/* File edited 11/25/2022 by Ankit Patel: Added trending */
+/* File edited 12/03/2022 by Ankit Patel: Added review section */
+/* File edited 12/04/2022 by Ankit Patel: Started to add summary section styling */
+/* File edited 12/05/2022 by Ankit Patel: Added summary section styling */
+/* File edited 12/06/2022 by Ankit Patel: Added styling for user's tier along with about us section */
+
+
+$purple: #C053FF;
+$white: #fff;
+$black: #000;
+$light_grey: #EBEBEB;
+$dark_grey: #7e7e7e;
+
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+.accent{
+    color: $purple;
+}
+
+.header {
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(food_overall3.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 7%;
+
+    .registration {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+}
+
+.logo {
+    width: 140px;
+    cursor: pointer;
+}
+
+.nav-links li {
+    color: $white;
+    font-size: 23px;
+    list-style: none;
+    display: inline-block;
+    margin: 10px 30px;
+
+    :hover {
+        font-size: 25px;
+        color: $dark_grey;
+    }
+}
+
+.a {
+    text-decoration: none;
+    color: $light_grey;
+}
+
+.register-btn {
+    display: flex;
+    background: $light_grey;
+    text-align: center;
+    color: $black;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.register-btn:hover {
+    border-style: solid;
+    border-color: $purple;
+}
+
+.container {
+    padding: 0 7%;
+}
+
+.header h1 {
+    font-size: 4vw;
+    font-weight: 500;
+    color: $light_grey;
+    text-align: center;
+    margin-top: 12%;
+}
+
+
+
+.search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background: $light_grey;
+    border-radius: 50%;
+    border: 0;
+    outline: none;
+
+    i {
+        cursor: pointer;
+        margin-right: 20px;
+    }
+}
+
+.search-bar {
+    background: $white;
+    width: 70%;
+    margin: 30px auto;
+    padding: 6px 10px 6px 30px;
+    border-radius: 20px;
+      
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: $purple;
+        font-size: 25px;
+    }
+
+    .form-control-lg {
+        font-size: 25px;
+        width: 95%;
+    }
+
+    form {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        input {
+            display: block;
+            border: 0;
+            outline: none;
+            background: transparent;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+    }
+}
+
+.location-input {
+    flex: 1;
+}
+
+/*--------- Trending ---------*/
+
+.sub-title {
+    margin: 50px 0 20px;
+    font-size: 2.2vw;
+    font-weight: 600;
+    color: $purple;
+}
+
+.trending {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    grid-gap: 50px 30px;
+    margin-bottom: 30px;
+}
+
+.trending-food {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+span {
+    h3 {
+        color: $purple;
+        text-align: center;
+    }
+    p{
+        color: $dark_grey;
+        text-align: right;
+        gap: 2px;
+    }
+}
+
+/*--------- Summary ---------*/
+
+.register-ad {
+    margin: 80px 0;
+    background-image: linear-gradient(to right, #3f2321, transparent),url(food_overall.jpg);
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 5%;
+    color: $white;
+
+    .register-btn {
+        display: flex;
+        background: $light_grey;
+        text-align: center;
+        color: $black;
+        padding: 8px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+}
+
+.register-ad {
+    h3 {
+        font-size: 4vw;
+        line-height: 5.3vw;
+        font-weight: 500;
+        span {
+            font-size: 2vw;
+        }
+    }
+
+    p {
+        font-size: 2vw;
+        margin: 10px 0;
+    }
+}
+
+
+/*--------- Summary ---------*/
+
+.sub-title-summary {
+    margin: 100px 0 20px;
+    font-size: 2.2vw;
+    font-weight: 600;
+    color: $purple;
+}
+
+.summary-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .summary-card {
+        background: $light_grey;
+        border-style: solid;
+        border-color: $purple;
+        width: 500px;
+        height: 400px;
+        margin: 50px;
+        border-radius: 15px;
+        text-align: center;
+    
+        .experience-card-img {
+            height: 200px;
+            margin-bottom: 15px;
+            padding: 20px 50px;
+        }
+
+        .fa-trophy {
+            color: $purple;
+            margin-bottom: 10px;
+            padding: 20px 50px;
+        }
+
+        .fa-arrow-right {
+            color: $purple;
+            margin-bottom: 10px;
+            padding: 20px 50px;
+        }
+        
+        .current-rewards{
+            margin-top: 0px;
+            padding: 15px;
+            padding-top: 0px;
+            font-size: 200%;
+            color: $purple;
+        }
+
+        h2 {
+            padding: 15px;
+            padding-top: 20px;
+            font-size: 200%;
+            color: $purple;
+        }
+
+
+        .tier-name-font-purple {
+            font-size: 300%;
+            color: $purple;
+        }
+        .tier-name-font-bronze {
+            font-size: 300%;
+            color: #B08D57;
+
+        }
+        .tier-name-font-silver {
+            font-size: 300%;
+            color: #BEC2CB;
+        }
+        .tier-name-font-gold {
+            font-size: 300%;
+            color: #E0AA3E;
+        }
+        .tier-name-font-platinum {
+            font-size: 300%;
+            color: #A0B2C6;
+        }
+        .tier-name-font-diamond {
+            font-size: 300%;
+            color: #B9F2FF;
+        }
+    
+        p {
+            padding: 10px;
+            font-size: 150%;
+            color: $dark_grey;
+
+            span{
+                color: $purple;
+            }
+        }
+    }
+}
+
+/*--------- Reviews ---------*/
+
+.sub-title-reviews {
+    margin: 50px 0 10px;
+    font-size: 2.2vw;
+    font-weight: 600;
+    color: $purple;
+}
+
+.top-user-reviews {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .full-box {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        .comment-box {
+            width: 490px;
+            background: $white;
+            padding: 20px;
+            margin: 15px;
+            border-radius: 8px;
+            border-style: solid;
+            border-color: $light_grey;
+            
+    
+            .profile {
+                display: flex;
+                align-items: center;
+    
+                .profile-image {
+                    box-shadow: $purple;
+                    border-radius: 50%;
+                    margin-right: 10px;
+    
+                    .logo-review {
+                        width: 75px;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+    
+                }
+    
+                .review-name {
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 10px;
+                    color: $dark_grey;
+                    font-size: 18px;
+    
+                    span {
+                        color: $purple;
+                        font-size: 14px;
+                    }
+
+                    .location-review{
+                        color: $purple;
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+    
+        .comment-box:hover {
+            box-shadow: 2px 2px 10px $purple;
+        }
+
+        .comment {
+            margin-top: 10px;
+        }
+    }
+}
+
+
+/*--------- Footer ---------*/
+
+footer {
+    margin-top: 100px;
+    text-align: center;
+    padding: 5px;
+    background-color: $light_grey;
+
+    .footer-title {
+        margin: 0 10px;
+        font-size: 1.8vw;
+        font-weight: 600;
+        color: $purple; 
+    }
+
+    p {
+        color: $dark_grey;
+        font-size: 1.0vw;
+        padding: 0px 150px;
+    }
+}
+

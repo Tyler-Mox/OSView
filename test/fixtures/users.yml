@@ -1,0 +1,20 @@
+# File edited 12/01/2022 by Samuel Dominguez: created 2 entries with sample data
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  email: test1@gmail.com
+  first_name: Sam
+  last_name: Dominguez
+  phone: (111)-111-1111
+  username: SD
+  points: 1
+
+two:
+  id: 2
+  email: test2@gmail.com
+  first_name: Joe
+  last_name: Swanson
+  phone: (222)-222-2222
+  username: JS
+  points: 1

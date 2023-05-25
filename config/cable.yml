@@ -1,0 +1,12 @@
+# File created 11/15/2022 by Samuel Dominguez: generated using `rails new` command
+development:
+  adapter: redis
+  url: redis://localhost:6379/1
+
+test:
+  adapter: test
+
+production:
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  channel_prefix: Project_6_Runtime_Terror_Team_2_production
